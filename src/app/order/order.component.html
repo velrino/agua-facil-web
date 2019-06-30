@@ -1,0 +1,197 @@
+<main class="profile-page">
+  <div class="position-relative">
+    <!-- shape Hero -->
+    <section class="section section-lg section-shaped pb-250">
+      <div class="shape shape-style-1 shape-primary"></div>
+      <div class="container py-lg-md d-flex">
+        <div class="col px-0">
+          <div class="row">
+            <div class="col-lg-12">
+              <h1 class="display-3  text-white">Informe o número do pedido
+              </h1>
+              <p class="lead  text-white">The design system comes with four pre-built pages to help you get started
+                faster. You can change the text and images and you're good to go.</p>
+
+              <div class="row">
+
+                <div class="col-lg-12 col-sm-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-4">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Informe o número do pedido" type="text"
+                        [(ngModel)]="order.form">
+                      <div class="input-group-prepend">
+                        <button type="button" class="btn btn-primary" (click)="goToOrder()">Buscar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SVG separator -->
+      <div class="separator separator-bottom separator-skew">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </section>
+    <!-- 1st Hero Variation -->
+  </div>
+  <section class="section" *ngIf="haveOrder()">
+    <div class="container">
+      <div class="card card-profile shadow mt--300">
+        <div class="px-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="javascript:void(0)">
+                  <img src="./assets/img/logo-examle.jpg" class="rounded-circle">
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+              <div class="card-profile-actions py-4 mt-lg-0">
+                <a href="javascript:void(0)" class="btn btn-lg btn-warning mr-4">{{status[historic.length-1]}}</a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-1">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Entregas</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Avaliações</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <h3>Empresa X</h3>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-md-6">
+              <h4>Histórico</h4>
+              <ul class="timeline">
+                <li *ngFor="let item of historic; let i = index">
+                  <div class="row">
+                    <div class="col-sm-12 text-primary font-weight-bold">
+                      <p class="float-left">{{status[item.status]}}</p>
+                      <p class="float-right">{{ item.date }}</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 noPadding">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi
+                      semper</p>
+                  </div>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-5 py-5 border-top">
+            <div class="h5 mb-4 text-center">Informações</div>
+
+            <div class="row justify-content-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Estimativa de entrega</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">25/07/2019 ás 14:30</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="mt-5 py-5 border-top">
+            <div class="h5 mb-4 text-center">Resumo do pedido</div>
+
+            <div class="row justify-content-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Código do pedido</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ order.id }}</p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Quantidade de água em m³</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.quantidade }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Quantidade de mangueira (metros)</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.mangueiras }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Nome </h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.cliente.name }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">E-mail</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.cliente.email }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">CEP</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.cliente.address.cep }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Endereço</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.cliente.address.street }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted font-weight-bold">Número</h6>
+              </div>
+              <div class="col-sm-5">
+                <p class="text-muted mb-0">{{ form.cliente.address.number }}</p>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-sm-12">
+                <h6 class="text-uppercase text-muted font-weight-bold">Observações</h6>
+              </div>
+              <div class="col-sm-12">
+                <p class="text-muted mb-0">{{ form.cliente.obs }}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

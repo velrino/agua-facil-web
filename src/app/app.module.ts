@@ -9,13 +9,14 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { LandingComponent } from './landing/landing.component';
 import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component';
+import { OrderComponent } from './order/order.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HttpModule } from '@angular/http';
     SignupComponent,
     LandingComponent,
     ProfileComponent,
+    OrderComponent,
     NavbarComponent,
     FooterComponent,
     LoginComponent
@@ -34,7 +36,7 @@ import { HttpModule } from '@angular/http';
     RouterModule,
     AppRoutingModule,
     HomeModule,
-    HttpModule
+    HttpModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

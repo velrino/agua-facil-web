@@ -1,52 +1,378 @@
-<main>
-  <div class="position-relative">
-    <!-- Hero for FREE version -->
-    <section class="section section-lg section-hero section-shaped">
-      <!-- Background circles -->
-      <div class="shape shape-style-1 shape-primary">
-        <span class="span-150"></span>
-        <span class="span-50"></span>
-        <span class="span-50"></span>
-        <span class="span-75"></span>
-        <span class="span-100"></span>
-        <span class="span-75"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-        <span class="span-50"></span>
-        <span class="span-100"></span>
-      </div>
-      <div class="container shape-container d-flex align-items-center py-lg">
-        <div class="col px-0">
-          <div class="row align-items-center justify-content-center">
-            <div class="col-lg-6 text-center">
-              <img src="./assets/img/brand/argon-white.png" style="width: 200px;" class="img-fluid">
-              <p class="lead text-white">A beautiful Design System for Bootstrap 4 and Angular 7. It's Free and Open Source.</p>
-              <div class="btn-wrapper mt-5">
-                <a href="https://www.creative-tim.com/product/argon-design-system-angular?ref=adsa-index-header" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
-                  <span class="btn-inner--icon"><i class="ni ni-cloud-download-95"></i></span>
-                  <span class="btn-inner--text">Download Angular</span>
-                </a>
-                <a href="https://github.com/creativetimofficial/argon-design-system-angular?ref=adsa-index-header" class="btn btn-lg btn-github btn-icon mb-3 mb-sm-0" target="_blank">
-                  <span class="btn-inner--icon"><i class="fa fa-github"></i></span>
-                  <span class="btn-inner--text">
-                    <span class="text-warning">Star us</span> on Github</span>
-                </a>
-              </div>
-              <div class="mt-5">
-                <small class="text-white font-weight-bold mb-0 mr-2">*proudly coded by</small>
-                <img src="./assets/img/brand/creativetim-white-slim.png" style="height: 28px;">
-              </div>
-            </div>
+<div class="section" style="padding: 25px;top: 100px;">
+    <div class="row spaceMid">
+       <div class="col-md-8 col-sm-12">
+          <input class="form-control" placeholder="Search" type="text">
+       </div>
+    </div>
+    <div class="row spaceMid">
+       <div class="col-md-8 col-sm-12">
+          <div class="row">
+             <div class="col">
+                <input class="form-control" placeholder="Search" type="text">
+             </div>
+             <div class="col">
+                <input class="form-control" placeholder="Search" type="text">
+             </div>
+             <div class="col">
+                <input class="form-control" placeholder="Search" type="text">
+             </div>
           </div>
-        </div>
-      </div>
-      <!-- SVG separator -->
-      <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
-    </section>
-  </div>
-  <app-sections></app-sections>
-</main>
+       </div>
+    </div>
+    <div class="row shadow">
+       <div class="col-lg-8 scrollDiv">
+          <div class="row">
+             <div class="col-lg-4" *ngFor="let item of result; let i = index">
+                <div class="card card-lift shadow border-0 spaceMid">
+                   <div class="card-header">
+                      <span class="badge badge-pill badge-primary" *ngIf="(i%1)==0">Próximo</span>
+                      <span class="badge badge-pill badge-primary" *ngIf="(i%2)==0">Novo</span>
+                      <span class="badge badge-pill badge-primary" *ngIf="(i%3)==0">Bom preço</span>
+                   </div>
+                   <div class="card-body py-5">
+                      <h6 class="text-primary text-uppercase">Empresa {{ i + 1}}</h6>
+                      <div>
+                         <div class="row align-items-center">
+                            <div class="col-sm-7">
+                               <small class="text-uppercase text-muted font-weight-bold">Entregas </small>
+                            </div>
+                            <div class="col-sm-5">
+                               <p class="text-muted mb-0">{{ (i+1) * 3}}</p>
+                            </div>
+                         </div>
+                         <div class="row align-items-center">
+                            <div class="col-sm-7">
+                               <small class="text-uppercase text-muted font-weight-bold">Agentamento </small>
+                            </div>
+                            <div class="col-sm-5">
+                               <p class="text-muted mb-0">Sim</p>
+                            </div>
+                         </div>
+                         <div class="row align-items-center">
+                            <div class="col-sm-7">
+                               <small class="text-uppercase text-muted font-weight-bold">Formas de pagamentos </small>
+                            </div>
+                            <div class="col-sm-5">
+                               <p class="text-muted mb-0">Crédito, Dinheiro, Débito</p>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="align-items-center" style="margin-top:20px;">
+                         <a href="javascript:void(0)" class="btn btn-outline-primary btn-block"
+                            (click)="open(classic)">Solicitar</a>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="col-lg-4">
+          <agm-map [latitude]="lat" [longitude]="lng">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+       </div>
+    </div>
+ </div>
+ <!-- MODALS -->
+ <ng-template #classic let-c="close" let-d="dismiss">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Empresa X</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <div>
+             <div class="row align-items-center">
+                <div class="col-sm-7">
+                   <small class="text-uppercase text-muted font-weight-bold">Entregas </small>
+                </div>
+                <div class="col-sm-5">
+                   <p class="text-muted mb-0">{{ 2 * 3}}</p>
+                </div>
+             </div>
+             <div class="row align-items-center">
+                <div class="col-sm-7">
+                   <small class="text-uppercase text-muted font-weight-bold">Agentamento </small>
+                </div>
+                <div class="col-sm-5">
+                   <p class="text-muted mb-0">Sim</p>
+                </div>
+             </div>
+             <div class="row align-items-center">
+                <div class="col-sm-7">
+                   <small class="text-uppercase text-muted font-weight-bold">Formas de pagamentos </small>
+                </div>
+                <div class="col-sm-5">
+                   <p class="text-muted mb-0">Crédito, Dinheiro, Débito</p>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="modal-footer">
+          <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal"
+             (click)="c('Close click')">Fechar</button>
+          <button type="button" class="btn btn-primary" (click)="open(classic2)">Solicitar</button>
+       </div>
+    </div>
+ </ng-template>
+ <ng-template #classic2 let-c="close" let-d="dismiss">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Empresa X</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <div class="row">
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-3">
+                      <small class="text-uppercase font-weight-bold">Quantidade de água em m³</small>
+                   </div>
+                   <div class="input-group mb-4">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Quantidade de água em m³" type="number" minlength="1" maxlength="5" [(ngModel)]="form.quantidade"
+                      (keyup)="calcularTotal()">
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-3">
+                      <small class="text-uppercase font-weight-bold">Quantidade de mangueira (metros)</small>
+                   </div>
+                   <div class="input-group mb-4">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Quantidade de mangueiras" type="number" minlength="1" maxlength="5" [(ngModel)]="form.mangueiras"
+                      (keyup)="calcularTotal()">
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-3">
+                      <small class="text-uppercase font-weight-bold">Data de preferência</small>
+                   </div>
+                   <div class="input-group mb-4">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Infome a data" name="dp" [(ngModel)]="form.data" ngbDatepicker
+                      #d="ngbDatepicker" (click)="d.toggle()" type="text" (select)="onDateSelection($event)"
+                      [minDate]="formHelpers.date.min" autocomplete="off" />
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-12 text-center">
+                <h6 class="mb-0">Total </h6>
+                <h5 class="mb-0">R$ {{ form.total }} </h5>
+             </div>
+          </div>
+       </div>
+       <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" (click)="open(classic)">Voltar</button>
+          <button type="button" class="btn btn-primary" (click)="open(classic3)">Próximo</button>
+       </div>
+    </div>
+ </ng-template>
+ <ng-template #classic3 let-c="close" let-d="dismiss">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Empresa X</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <div class="row">
+
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-2">
+                      <small class="text-uppercase font-weight-bold">Nome</small>
+                   </div>
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Nome" type="text" minlength="1" maxlength="100" [(ngModel)]="form.cliente.name">
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-2">
+                      <small class="text-uppercase font-weight-bold">E-mail</small>
+                   </div>
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="exemplo@agua.com" type="text" minlength="1" maxlength="100" [(ngModel)]="form.cliente.email">
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-3">
+                      <small class="text-uppercase font-weight-bold">Endereço</small>
+                   </div>
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="CEP" type="text" minlength="1" maxlength="9" [(ngModel)]="form.cliente.address.cep">
+                   </div>
+
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Endereço" type="text" minlength="1" maxlength="100" [(ngModel)]="form.cliente.address.street">
+                   </div>
+
+
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Número" type="text" minlength="1" maxlength="100" [(ngModel)]="form.cliente.address.number">
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-lg-12">
+                <div class="form-group">
+                   <div class="mb-2">
+                      <small class="text-uppercase font-weight-bold">Observações</small>
+                   </div>
+                   <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                      </div>
+                      <textarea class="form-control" rows="3" maxlength="300" [(ngModel)]="form.cliente.obs" style="resize: none;"></textarea>
+                      <div class="invalid-feedback">Example invalid custom select feedback</div>
+                   </div>
+                </div>
+             </div>
+
+          </div>
+       </div>
+       <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" (click)="open(classic2)">Voltar</button>
+          <button type="button" class="btn btn-primary" (click)="open(classic4)">Resumo</button>
+       </div>
+    </div>
+ </ng-template>
+ <ng-template #classic4 let-c="close" let-d="dismiss">
+    <div class="modal-content bg-gradient-neutral">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-notification">Pedido solicitado</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+
+          <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">Quantidade de água em m³</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.quantidade }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">Quantidade de mangueira (metros)</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.mangueiras }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">Nome </small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.cliente.name }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">E-mail</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.cliente.email }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">CEP</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.cliente.address.cep }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">Endereço</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.cliente.address.street }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-7">
+                 <small class="text-uppercase text-muted font-weight-bold">Número</small>
+              </div>
+              <div class="col-sm-5">
+                 <p class="text-muted mb-0">{{ form.cliente.address.number }}</p>
+              </div>
+           </div>
+           <div class="row align-items-center">
+              <div class="col-sm-12">
+                 <small class="text-uppercase text-muted font-weight-bold">Observações</small>
+              </div>
+              <div class="col-sm-12">
+                 <p class="text-muted mb-0">{{ form.cliente.obs }}</p>
+              </div>
+           </div>
+ 
+            
+       </div>
+       <div class="modal-footer align-items-center">
+          <button type="button" class="btn btn-outline-primary" (click)="open(classic3)">Voltar</button>
+          <button type="button" class="btn btn-primary" (click)="open(classic5)">Finalizar</button>
+       </div>
+    </div>
+ </ng-template>
+ <ng-template #classic5 let-c="close" let-d="dismiss">
+    <div class="modal-content bg-gradient-neutral">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-notification">Pedido solicitado</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <div class="py-3 text-center">
+             <i class="ni ni-bell-55 ni-3x"></i>
+             <h4 class="heading mt-4">#123456789!</h4>
+             <p>Este é o número do seu pedido</p>
+          </div>
+       </div>
+       <div class="modal-footer align-items-center">
+          <button type="button" class="btn btn-primary" (click)="goToOrder('123456789')">Ver pedido</button>
+       </div>
+    </div>
+ </ng-template>
