@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "deploy": "ng build --prod && npm run upload",
-    "upload": "npx ngh --repo=https://github.com/aguafacil/aguafacil.github.io.git --name=velrino --email=denismagalhaesvelrino@gmail.com  --branch=master --dir=dist/argon-design-system-angular"
+    "upload": "npx ngh --repo=https://github.com/aguafacil/aguafacil.github.io.git --name=velrino --email=denismagalhaesvelrino@gmail.com  --branch=master --dir=dist/agua-facil"
   },
   "private": true,
   "dependencies": {
