@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { SectionsModule } from '../sections/sections.module';
 import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { AgmCoreModule } from '@agm/core';
         BrowserModule,
         FormsModule,
         RouterModule,
-        SectionsModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBaBKMMfPD75rATU89MwJrpC9sjT_phdvI'
         }),

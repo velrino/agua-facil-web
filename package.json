@@ -8,7 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "deploy": "ng build --prod && npm run upload",
+    "upload": "npx ngh --repo=https://github.com/aguafacil/aguafacil.github.io.git --name=velrino --email=denismagalhaesvelrino@gmail.com  --branch=master --dir=dist/argon-design-system-angular"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,7 @@
     "@types/jasmine": "3.3.9",
     "@types/jasminewd2": "2.0.6",
     "@types/node": "11.11.3",
+    "angular-cli-ghpages": "^0.5.3",
     "codelyzer": "5.0.0-beta.1",
     "jasmine-core": "3.3.0",
     "jasmine-spec-reporter": "4.2.1",
