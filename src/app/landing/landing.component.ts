@@ -5,6 +5,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { default as estadosData } from '../../helpers/data/estados';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { RequestService } from '../api/request.service';
 
 @Component({
   selector: 'app-landing',
@@ -15,11 +16,12 @@ import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 export class LandingComponent implements OnInit {
   states: string[] = [];
 
-  constructor(private modalService: NgbModal, calendar: NgbCalendar, private router: Router) {
+  constructor(private modalService: NgbModal, calendar: NgbCalendar, private router: Router, private requestService: RequestService) {
     const today = calendar.getToday();
     this.formHelpers.date.min = today;
     this.form.data = today;
     this.getEstado();
+    this.requestService.default('/api/places/search');
   }
 
 

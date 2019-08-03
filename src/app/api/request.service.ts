@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 })
 export class RequestService {
 
-  private url = 'http://localhost:3000/';
+  private url = 'http://127.0.0.1:3333';
 
   constructor(
     private http: Http,
@@ -14,7 +14,7 @@ export class RequestService {
   ) { }
 
   request(url: string = null) {
-    let actualUrl = (url != null) ? url : this.url;
+    let actualUrl = this.url.concat(url);
     return new Promise((resolve, reject) => {
       this.http.get(actualUrl)
         .subscribe(data => {

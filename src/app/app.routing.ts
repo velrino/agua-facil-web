@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'register', component: SignupComponent },
   { path: 'home', component: LandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: 'admin', loadChildren: './admin/home/home.module#AdminHomeModule' },
+  //{ path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
