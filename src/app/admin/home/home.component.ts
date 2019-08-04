@@ -37,7 +37,7 @@ export class AdminHomeComponent implements OnInit {
 
     open(content) {
         this.modalService.dismissAll();
-        this.modalService.open(content, { centered: true }).result.then((result) => {
+        this.modalService.open(content, { centered: true, backdrop: 'static' }).result.then((result) => {
         }, (reason) => {
         });
     }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+import { RequestService } from '../api/request.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-order',
@@ -9,21 +11,22 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 export class OrderComponent implements OnInit {
 
+    @ViewChild('orderErrorModal') orderErrorModal: ElementRef;
+
     form = {
-        data: null,
-        quantidade: 10,
-        mangueiras: 1,
-        total: 0,
-        cliente: {
-            name: null,
-            email: null,
-            address: {
-                cep: null,
-                street: null,
-                number: null,
-            },
-            obs: null,
-        }
+        company_place_id: '1fffe522-e46f-4366-9cb9-bb4807b58b59',
+        client_name: null,
+        client_email: null,
+        client_address: null,
+        client_phone: null,
+        client_number: null,
+        client_cep: null,
+        quantity: 1,
+        meters: 1,
+        scheduling: false,
+        date: null,
+        obs: null,
+        historic: []
     }
     order = {
         id: null,
@@ -33,30 +36,10 @@ export class OrderComponent implements OnInit {
     status = [
         'Pendente', 'Aceito', 'Carregando', 'A caminho da entrega', 'Concluído', 'Cancelado', 'Expirado'
     ]
-    
-    historic = [
-        {
-            status: 3,
-            date: '22/06/2019 - 21:34',
-            obs: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper"
-        },
-        {
-            status: 2,
-            date: '22/06/2019 - 18:17',
-            obs: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper"
-        },
-        {
-            status: 1,
-            date: '21/06/2019 - 21:32',
-            obs: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper"
-        },
-        {
-            status: 0,
-            date: '21/06/2019 - 08:15',
-            obs: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper"
-        },
-    ]
-    constructor(private route: ActivatedRoute, private router: Router) {
+
+    statusLabel = null;
+
+    constructor(private modalService: NgbModal, private route: ActivatedRoute, private router: Router, private requestService: RequestService) {
         this.getOrder();
     }
 
@@ -71,14 +54,35 @@ export class OrderComponent implements OnInit {
     defineOrder(id) {
         this.order.id = id;
         this.order.form = id;
+        this.getOrderApi()
     }
+
+    async getOrderApi() {
+        const data = await this.requestService.default('/order/'.concat(this.order.id));
+
+        if (data.error) {
+            this.order.id = null;
+            this.open(this.orderErrorModal);
+        } else if (!data.error) {
+            this.form = data.result;
+            this.statusLabel = this.status[this.form.historic.length - 1];
+        }
+    }
+
     haveOrder() {
         return (this.order.id != null);
     }
 
     goToOrder() {
-        if(this.order.form != null) {
+        if (this.order.form != null) {
             this.router.navigate(['/order/'.concat(this.order.form)]);
         }
+    }
+
+    open(content: any, dismissAll = true) {
+        this.modalService.dismissAll();
+        this.modalService.open(content, { centered: true, backdrop: 'static' }).result.then((result) => {
+        }, (reason) => {
+        });
     }
 }

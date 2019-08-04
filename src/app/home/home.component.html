@@ -2,20 +2,31 @@
    <div class="row spaceMid">
       <div class="col-lg-8">
          <div class="row">
-            <div class="col-lg-12 col-sm-12 spaceMid">
-               <input class="form-control" placeholder="Search" type="text">
+
+            <div class="col-lg-12 col-sm-12">
+               <div class="form-group">
+                  <div class="input-group input-group-alternative mb-4">
+                     <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                     </div>
+                     <input class="form-control" placeholder="Inform endereço" type="text"
+                        [(ngModel)]="search.address">
+                     <div class="input-group-prepend">
+                        <button type="button" class="btn btn-primary" (click)="getPlacesClick()">Buscar</button>
+                     </div>
+                  </div>
+               </div>
             </div>
 
             <div class="col-lg-12 col-sm-12 spaceMid">
                <div class="row">
-                  <div class="col">
-                     <input class="form-control" placeholder="Search" type="text">
-                  </div>
-                  <div class="col">
-                     <input class="form-control" placeholder="Search" type="text">
-                  </div>
-                  <div class="col">
-                     <input class="form-control" placeholder="Search" type="text">
+                  <div class="col-lg-2">
+                     <div class="form-group">
+                        <label for="exampleFormControlSelect1">Distância</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="search.distance" (change)="getPlacesClick()">
+                           <option *ngFor="let item of formHelpers.distance" [value]="item"> {{item}} KM</option>
+                        </select>
+                     </div>
                   </div>
                </div>
             </div>
@@ -31,14 +42,14 @@
                            <span class="badge badge-pill badge-primary" *ngIf="(i%3)==0">Bom preço</span>
                         </div>
                         <div class="card-body py-5">
-                           <h6 class="text-primary text-uppercase">Empresa {{ i + 1}}</h6>
+                           <h6 class="text-primary text-uppercase">{{ item.company.name_social }}</h6>
                            <div>
                               <div class="row align-items-center">
                                  <div class="col-sm-7">
                                     <small class="text-uppercase text-muted font-weight-bold">Entregas </small>
                                  </div>
                                  <div class="col-sm-5">
-                                    <p class="text-muted mb-0">{{ (i+1) * 3}}</p>
+                                    <small class="text-muted mb-0">{{ item.__meta__.total_order_done }}</small>
                                  </div>
                               </div>
                               <div class="row align-items-center">
@@ -46,7 +57,7 @@
                                     <small class="text-uppercase text-muted font-weight-bold">Agentamento </small>
                                  </div>
                                  <div class="col-sm-5">
-                                    <p class="text-muted mb-0">Sim</p>
+                                    <small class="text-muted mb-0">{{ checkScheduling(item.scheduling) }}</small>
                                  </div>
                               </div>
                               <div class="row align-items-center">
@@ -55,7 +66,7 @@
                                     </small>
                                  </div>
                                  <div class="col-sm-5">
-                                    <p class="text-muted mb-0">Crédito, Dinheiro, Débito</p>
+                                    <small class="text-muted mb-0">{{ methodPayments(item.data.payment) }}</small>
                                  </div>
                               </div>
                            </div>
@@ -72,10 +83,10 @@
          </div>
       </div>
       <div class="col-lg-4">
-            <agm-map [latitude]="lat" [longitude]="lng">
-               <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            </agm-map>
-         </div>
+         <agm-map [latitude]="lat" [longitude]="lng">
+            <agm-marker  *ngFor="let item of result; let i = index" [latitude]="item.latitude" [longitude]="item.longitude"></agm-marker>
+         </agm-map>
+      </div>
    </div>
 
 
@@ -144,7 +155,7 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="Quantidade de água em m³" type="number" minlength="1"
-                        maxlength="5" [(ngModel)]="form.quantidade" (keyup)="calcularTotal()">
+                        maxlength="5" [(ngModel)]="form.quantity" (keyup)="calcularTotal()">
                   </div>
                </div>
             </div>
@@ -158,7 +169,7 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="Quantidade de mangueiras" type="number" minlength="1"
-                        maxlength="5" [(ngModel)]="form.mangueiras" (keyup)="calcularTotal()">
+                        maxlength="5" [(ngModel)]="form.meters" (keyup)="calcularTotal()">
                   </div>
                </div>
             </div>
@@ -171,9 +182,10 @@
                      <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
-                     <input class="form-control" placeholder="Infome a data" name="dp" [(ngModel)]="form.data"
-                        ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text"
-                        (select)="onDateSelection($event)" [minDate]="formHelpers.date.min" autocomplete="off" />
+                     <input class="form-control" placeholder="Infome a data" name="dp"
+                        [(ngModel)]="formHelpers.dateForm" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
+                        type="text" [minDate]="formHelpers.date.min" autocomplete="off" />
+
                   </div>
                </div>
             </div>
@@ -210,7 +222,22 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="Nome" type="text" minlength="1" maxlength="100"
-                        [(ngModel)]="form.cliente.name">
+                        [(ngModel)]="form.client_name">
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-12">
+               <div class="form-group">
+                  <div class="mb-2">
+                     <small class="text-uppercase font-weight-bold">Telefone</small>
+                  </div>
+                  <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                     </div>
+                     <input class="form-control" placeholder="11 98765-4321" type="text" minlength="1" maxlength="100"
+                        [(ngModel)]="form.client_phone">
                   </div>
                </div>
             </div>
@@ -225,7 +252,7 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="exemplo@agua.com" type="text" minlength="1"
-                        maxlength="100" [(ngModel)]="form.cliente.email">
+                        maxlength="100" [(ngModel)]="form.client_email">
                   </div>
                </div>
             </div>
@@ -240,7 +267,7 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="CEP" type="text" minlength="1" maxlength="9"
-                        [(ngModel)]="form.cliente.address.cep">
+                        [(ngModel)]="form.client_cep" (change)="getCEP()">
                   </div>
 
                   <div class="input-group mb-2">
@@ -248,16 +275,23 @@
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="Endereço" type="text" minlength="1" maxlength="100"
-                        [(ngModel)]="form.cliente.address.street">
+                        [(ngModel)]="form.client_address">
                   </div>
 
+                  <div class="input-group mb-2">
+                     <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                     </div>
+                     <input class="form-control" placeholder="Estado" type="text" minlength="1" maxlength="100"
+                        [(ngModel)]="form.client_state">
+                  </div>
 
                   <div class="input-group mb-2">
                      <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
                      <input class="form-control" placeholder="Número" type="text" minlength="1" maxlength="100"
-                        [(ngModel)]="form.cliente.address.number">
+                        [(ngModel)]="form.client_number">
                   </div>
                </div>
             </div>
@@ -271,7 +305,7 @@
                      <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                      </div>
-                     <textarea class="form-control" rows="3" maxlength="300" [(ngModel)]="form.cliente.obs"
+                     <textarea class="form-control" rows="3" maxlength="300" [(ngModel)]="form.obs"
                         style="resize: none;"></textarea>
                      <div class="invalid-feedback">Example invalid custom select feedback</div>
                   </div>
@@ -301,7 +335,7 @@
                <small class="text-uppercase text-muted font-weight-bold">Quantidade de água em m³</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.quantidade }}</p>
+               <p class="text-muted mb-0">{{ form.quantity }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -309,7 +343,7 @@
                <small class="text-uppercase text-muted font-weight-bold">Quantidade de mangueira (metros)</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.mangueiras }}</p>
+               <p class="text-muted mb-0">{{ form.meters }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -317,7 +351,15 @@
                <small class="text-uppercase text-muted font-weight-bold">Nome </small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.cliente.name }}</p>
+               <p class="text-muted mb-0">{{ form.client_name }}</p>
+            </div>
+         </div>
+         <div class="row align-items-center">
+            <div class="col-sm-7">
+               <small class="text-uppercase text-muted font-weight-bold">Telefone </small>
+            </div>
+            <div class="col-sm-5">
+               <p class="text-muted mb-0">{{ form.client_phone }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -325,7 +367,7 @@
                <small class="text-uppercase text-muted font-weight-bold">E-mail</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.cliente.email }}</p>
+               <p class="text-muted mb-0">{{ form.client_email }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -333,7 +375,7 @@
                <small class="text-uppercase text-muted font-weight-bold">CEP</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.cliente.address.cep }}</p>
+               <p class="text-muted mb-0">{{ form.client_cep }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -341,7 +383,7 @@
                <small class="text-uppercase text-muted font-weight-bold">Endereço</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.cliente.address.street }}</p>
+               <p class="text-muted mb-0">{{ form.client_address }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -349,7 +391,7 @@
                <small class="text-uppercase text-muted font-weight-bold">Número</small>
             </div>
             <div class="col-sm-5">
-               <p class="text-muted mb-0">{{ form.cliente.address.number }}</p>
+               <p class="text-muted mb-0">{{ form.client_number }}</p>
             </div>
          </div>
          <div class="row align-items-center">
@@ -357,7 +399,7 @@
                <small class="text-uppercase text-muted font-weight-bold">Observações</small>
             </div>
             <div class="col-sm-12">
-               <p class="text-muted mb-0">{{ form.cliente.obs }}</p>
+               <p class="text-muted mb-0">{{ form.obs }}</p>
             </div>
          </div>
 
@@ -365,11 +407,30 @@
       </div>
       <div class="modal-footer align-items-center">
          <button type="button" class="btn btn-outline-primary" (click)="open(classic3)">Voltar</button>
-         <button type="button" class="btn btn-primary" (click)="open(classic5)">Finalizar</button>
+         <button type="button" class="btn btn-primary" (click)="createOrder()">Finalizar</button>
       </div>
    </div>
 </ng-template>
-<ng-template #classic5 let-c="close" let-d="dismiss">
+<ng-template #orderFinishErrorModal let-c="close" let-d="dismiss">
+   <div class="modal-content bg-gradient-neutral">
+      <div class="modal-header">
+         <h6 class="modal-title" id="modal-title-notification">Pedido não finalizado</h6>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="py-3 text-center">
+            <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+            <p>Por favor, preencha os campos corretamente</p>
+         </div>
+      </div>
+      <div class="modal-footer align-items-center">
+         <button type="button" class="btn btn-outline-primary" (click)="open(classic4)">Voltar</button>
+      </div>
+   </div>
+</ng-template>
+<ng-template #orderFinishModal let-c="close" let-d="dismiss">
    <div class="modal-content bg-gradient-neutral">
       <div class="modal-header">
          <h6 class="modal-title" id="modal-title-notification">Pedido solicitado</h6>
@@ -380,12 +441,12 @@
       <div class="modal-body">
          <div class="py-3 text-center">
             <i class="ni ni-bell-55 ni-3x"></i>
-            <h4 class="heading mt-4">#123456789!</h4>
+            <h4 class="heading mt-4">#{{order.id}}!</h4>
             <p>Este é o número do seu pedido</p>
          </div>
       </div>
       <div class="modal-footer align-items-center">
-         <button type="button" class="btn btn-primary" (click)="goToOrder('123456789')">Ver pedido</button>
+         <button type="button" class="btn btn-primary" (click)="goToOrder()">Ver pedido</button>
       </div>
    </div>
 </ng-template>

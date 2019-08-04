@@ -16,7 +16,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
 import { HttpModule } from '@angular/http';
-import { AgmCoreModule } from '@agm/core';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { AgmCoreModule } from '@agm/core';
     OrderComponent,
     NavbarComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     HomeModule,
     HttpModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

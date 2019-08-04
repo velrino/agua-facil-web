@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
               <div class="card-profile-actions py-4 mt-lg-0">
-                <a href="javascript:void(0)" class="btn btn-lg btn-warning mr-4">{{status[historic.length-1]}}</a>
+                <a href="javascript:void(0)" class="btn btn-lg btn-warning mr-4">{{statusLabel}}</a>
               </div>
             </div>
             <div class="col-lg-4 order-lg-1">
@@ -83,17 +83,16 @@
             <div class="col-md-6">
               <h4>Histórico</h4>
               <ul class="timeline">
-                <li *ngFor="let item of historic; let i = index">
+                <li *ngFor="let item of form.historic; let i = index">
                   <div class="row">
                     <div class="col-sm-12 text-primary font-weight-bold">
-                      <p class="float-left">{{status[item.status]}}</p>
-                      <p class="float-right">{{ item.date }}</p>
+                      <p class="float-left">{{status[item.status_id-1]}}</p>
+                      <p class="float-right">{{ item.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</p>
                     </div>
                   </div>
-                  <div class="col-sm-12 noPadding">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi
-                      semper</p>
-                  </div>
+                  <!-- <div class="col-sm-12 noPadding">
+                    <p>{{ item.data }}</p>
+                  </div> -->
 
                 </li>
               </ul>
@@ -108,7 +107,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Estimativa de entrega</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">25/07/2019 ás 14:30</p>
+                <p class="text-muted mb-0">{{ form.date }}</p>
               </div>
             </div>
 
@@ -129,7 +128,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Quantidade de água em m³</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.quantidade }}</p>
+                <p class="text-muted mb-0">{{ form.quantity }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -137,7 +136,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Quantidade de mangueira (metros)</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.mangueiras }}</p>
+                <p class="text-muted mb-0">{{ form.meters }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -145,7 +144,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Nome </h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.cliente.name }}</p>
+                <p class="text-muted mb-0">{{ form.client_name }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -153,7 +152,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">E-mail</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.cliente.email }}</p>
+                <p class="text-muted mb-0">{{ form.client_email }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -161,7 +160,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">CEP</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.cliente.address.cep }}</p>
+                <p class="text-muted mb-0">{{ form.client_cep }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -169,7 +168,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Endereço</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.cliente.address.street }}</p>
+                <p class="text-muted mb-0">{{ form.client_address }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -177,7 +176,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Número</h6>
               </div>
               <div class="col-sm-5">
-                <p class="text-muted mb-0">{{ form.cliente.address.number }}</p>
+                <p class="text-muted mb-0">{{ form.client_number }}</p>
               </div>
             </div>
             <div class="row align-items-center">
@@ -185,7 +184,7 @@
                 <h6 class="text-uppercase text-muted font-weight-bold">Observações</h6>
               </div>
               <div class="col-sm-12">
-                <p class="text-muted mb-0">{{ form.cliente.obs }}</p>
+                <p class="text-muted mb-0">{{ form.obs }}</p>
               </div>
             </div>
           </div>
@@ -195,3 +194,22 @@
     </div>
   </section>
 </main>
+<ng-template #orderErrorModal let-c="close" let-d="dismiss">
+    <div class="modal-content bg-gradient-neutral">
+       <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-notification">Pedido não encontrado</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d()">
+             <span aria-hidden="true">×</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <div class="py-3 text-center">
+             <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+             <p>Pedido informado não foi encontrado</p>
+          </div>
+       </div>
+       <div class="modal-footer align-items-center">
+          <button type="button" class="btn btn-outline-primary" (click)="d()">Fechar</button>
+       </div>
+    </div>
+ </ng-template>

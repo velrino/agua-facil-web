@@ -8,6 +8,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AdminRoutingModule } from './admin.routing.module';
 import { AdminOrdersComponent } from '../orders/orders.component';
 import { AdminPlacesComponent } from '../places/places.component';
+import { FilterPipe } from '../../pipes/filter/filter.pipe';
 
 const components = [
     AdminHomeComponent,
@@ -25,7 +26,7 @@ const components = [
         NgbModule,
         AdminRoutingModule
     ],
-    declarations: components,
+    declarations: [...components, FilterPipe],
     exports: components,
     providers: []
 })

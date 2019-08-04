@@ -21,7 +21,6 @@ export class LandingComponent implements OnInit {
     this.formHelpers.date.min = today;
     this.form.data = today;
     this.getEstado();
-    this.requestService.default('/api/places/search');
   }
 
 
@@ -34,6 +33,7 @@ export class LandingComponent implements OnInit {
   }
 
   public model: any;
+  stateSelected = null;
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -44,12 +44,11 @@ export class LandingComponent implements OnInit {
     )
 
   selectedState(state: any) {
-    console.log(state.item);
-    this.goBusca();
+    this.goBusca(state.item);
   }
 
-  goBusca() {
-    this.router.navigate(['/search'], { queryParams: {} });
+  goBusca(address = null) {
+    this.router.navigate(['/search'], { queryParams: { address } });
   }
 
   form = {
@@ -80,7 +79,7 @@ export class LandingComponent implements OnInit {
 
   open(content, dismissAll = true) {
     this.modalService.dismissAll();
-    this.modalService.open(content, { centered: true }).result.then((result) => {
+    this.modalService.open(content, { centered: true, backdrop: 'static' }).result.then((result) => {
     }, (reason) => {
     });
   }
