@@ -7,7 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class RequestService {
 
-  private api = 'http://134.209.217.185/api';
+  private api = 'https://agua-facil-api.herokuapp.com/api';
 
   constructor(
     private http: Http,

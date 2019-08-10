@@ -6,6 +6,8 @@ import { default as estadosData } from '../../helpers/data/estados';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { RequestService } from '../api/request.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-landing',
@@ -14,9 +16,16 @@ import { RequestService } from '../api/request.service';
 })
 
 export class LandingComponent implements OnInit {
+  registerForm: FormGroup;
   states: string[] = [];
 
-  constructor(private modalService: NgbModal, calendar: NgbCalendar, private router: Router, private requestService: RequestService) {
+  constructor(
+    private modalService: NgbModal,
+    calendar: NgbCalendar,
+    private router: Router,
+    private requestService: RequestService,
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService) {
     const today = calendar.getToday();
     this.formHelpers.date.min = today;
     this.form.data = today;
@@ -75,6 +84,24 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     this.calcularTotal();
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      document: ['', [
+        Validators.required,
+        Validators.pattern(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}|[0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}\-?[0-9]{2})$/),]]
+    });
+  }
+
+  get formRegister() { return this.registerForm.controls; }
+
+
+  submitCompany() {
+    this.toastr.error('Hello world!', 'Toastr fun!');
+    if (this.registerForm.invalid) {
+      const { controls } = this.registerForm;
+      console.log(controls);
+    }
   }
 
   open(content, dismissAll = true) {

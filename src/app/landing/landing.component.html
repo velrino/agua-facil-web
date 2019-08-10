@@ -864,17 +864,19 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="modal-body">
+
         <div class="row">
   
           <div class="col-lg-12">
             <div class="form-group">
               <div class="mb-2">
-                <small class="text-uppercase font-weight-bold">Nome</small>
+                <small class="text-uppercase font-weight-bold">Nome do responsável</small>
               </div>
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
                 </div>
                 <input class="form-control" placeholder="Nome" type="text" minlength="1" maxlength="100">
               </div>
@@ -888,9 +890,9 @@
               </div>
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                 </div>
-                <input class="form-control" placeholder="exemplo@agua.com" type="text" minlength="1" maxlength="100">
+                <input class="form-control" placeholder="exemplo@agua.com" type="email" minlength="1" maxlength="100">
               </div>
             </div>
           </div>
@@ -904,7 +906,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                   </div>
-                  <input class="form-control" placeholder="(11) 2035 8536" type="text" minlength="1" maxlength="100">
+                  <input class="form-control" placeholder="(11) 98765 4321" type="text" mask="(00) 0000 00009"  />
                 </div>
               </div>
             </div>
@@ -918,17 +920,35 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
                   </div>
-                  <input class="form-control" placeholder="21.236.181/0001-20" type="text" minlength="1" maxlength="100">
+                  <input class="form-control" placeholder="21.236.181/0001-20" mask="00.000.000/0000-00" type="text" minlength="1" maxlength="18" formControlName="document" [ngClass]="{ 'is-invalid': submitted && formRegister.document.errors }">
                 </div>
               </div>
             </div>
   
+
+              
+          <div class="col-lg-12">
+            <div class="form-group">
+              <div class="mb-2">
+                <small class="text-uppercase font-weight-bold">Empresa</small>
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-building-o"></i></span>
+                </div>
+                <input class="form-control" placeholder="Empresa" type="text" disabled>
+              </div>
+            </div>
+          </div>
+
         </div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" >Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="open(classic98)">Enviar</button>
+        <button type="button" class="btn btn-primary" (click)="submitCompany()">Enviar</button>
       </div>
+    </form>
     </div>
   </ng-template>
   <ng-template #classic98 let-c="close" let-d="dismiss">
