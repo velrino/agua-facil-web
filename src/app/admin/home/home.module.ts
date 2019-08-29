@@ -8,13 +8,16 @@ import { AgmCoreModule } from '@agm/core';
 import { AdminRoutingModule } from './admin.routing.module';
 import { AdminOrdersComponent } from '../orders/orders.component';
 import { AdminPlacesComponent } from '../places/places.component';
+import { LoginComponent } from '../../login/login.component';
 import { FilterPipe } from '../../pipes/filter/filter.pipe';
+import { AuthService } from '../../api/auth/auth.service';
+import { AuthGuardService } from '../../api/auth-guard/auth-guard.service';
 
 const components = [
     AdminHomeComponent,
     AdminPlacesComponent,
-    AdminOrdersComponent
-] 
+    AdminOrdersComponent,
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -28,6 +31,6 @@ const components = [
     ],
     declarations: [...components, FilterPipe],
     exports: components,
-    providers: []
+    providers: [AuthService, AuthGuardService]
 })
 export class AdminHomeModule { }
