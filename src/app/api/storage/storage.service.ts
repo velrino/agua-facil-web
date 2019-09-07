@@ -15,7 +15,7 @@ export class StorageService {
         return localStorage.setItem(index, (typeof value === 'object') ? JSON.stringify(value) : value);
     }
 
-    static getObject(index: string) {
-        return JSON.parse(this.get(index));
+    static delete(index: string) {
+        return localStorage.removeItem(index);
     }
 }

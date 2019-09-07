@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.toastr.error('E-mail ou senha incorreto');
       } else {
         StorageService.set('auth', data.result)
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/orders']);
       }
     }
   }

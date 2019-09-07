@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { children } from './children.routes';
+import { StorageService } from '../../api/storage/storage.service';
 
 @Component({
     selector: 'app-home',
@@ -26,11 +27,11 @@ export class AdminHomeComponent implements OnInit {
         return this.basePath.concat(path);
     }
 
-    setActualPath(){
+    setActualPath() {
         this.actualPath = this.router.url;
     }
 
-    isActualPath(path: string)  {
+    isActualPath(path: string) {
         this.setActualPath();
         return (this.actualPath === this.basePath.concat(path));
     }
@@ -40,6 +41,11 @@ export class AdminHomeComponent implements OnInit {
         this.modalService.open(content, { centered: true, backdrop: 'static' }).result.then((result) => {
         }, (reason) => {
         });
+    }
+
+    logout() {
+        StorageService.delete('auth');
+        this.router.navigate(['/login']);
     }
 
 }

@@ -1,13 +1,13 @@
 <div class="section" style="padding: 25px;top: 100px;">
-   <div class="row">
-      <div class="col-2">
-         <div class="list-group">
-            <a *ngFor="let link of links" [routerLink]="[handlePath(link.path)]" class="list-group-item list-group-item-action" [ngClass]="{'active': isActualPath(link.path)}" (click)="setActualPath()"
-            >{{link.data.name}}</a>
-         </div>
-      </div>
-      <div class="col-10">
-         <router-outlet></router-outlet>
-      </div>
-   </div>
+    <div class="row">
+        <div class="col-2">
+            <div class="list-group">
+                <a *ngFor="let link of links" [routerLink]="[handlePath(link.path)]" class="list-group-item list-group-item-action" [ngClass]="{'active': isActualPath(link.path)}" (click)="setActualPath()">{{link.data.name}}</a>
+                <button href="#" class="list-group-item list-group-item-action" (click)="logout()">Sair</button >
+            </div>
+        </div>
+        <div class="col-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
