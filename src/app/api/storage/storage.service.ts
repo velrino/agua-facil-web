@@ -12,6 +12,10 @@ export class StorageService {
     }
 
     static set(index: string, value: any) {
-        return localStorage.setItem(index, (typeof value === 'object') ? JSON.parse(value) : value);
+        return localStorage.setItem(index, (typeof value === 'object') ? JSON.stringify(value) : value);
+    }
+
+    static getObject(index: string) {
+        return JSON.parse(this.get(index));
     }
 }
