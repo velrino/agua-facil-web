@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AdminHomeComponent } from './home.component';
 import { AgmCoreModule } from '@agm/core';
 import { AdminRoutingModule } from './admin.routing.module';
+import { AdminCompaniesComponent } from '../companies/companies.component';
 import { AdminOrdersComponent } from '../orders/orders.component';
 import { AdminPlacesComponent } from '../places/places.component';
 import { LoginComponent } from '../../login/login.component';
@@ -16,6 +17,7 @@ import { NgxMaskModule } from 'ngx-mask'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const components = [
+    AdminCompaniesComponent,
     AdminHomeComponent,
     AdminPlacesComponent,
     AdminOrdersComponent,
