@@ -144,13 +144,22 @@ export class AdminPlacesComponent implements OnInit {
             message = 'Estabelecimento atualizado';
             this.placeData.data = JSON.stringify(this.placeData.data)
             if (isDelete) {
-                this.placeData = await this.getPlaceApi(id);
+                method = 'DELETE';
                 message = 'Estabelecimento deletado';
-                this.placeData.status_id = 99;
+                this.placeData = {};
             }
         }
         await this.requestService.default(url, true, method, this.placeData);
         this.toastr.success(message);
+        (method == 'POST') ? this.closeModal() : this.getPlacesApi();
+    }
+
+    havePlacesData() {
+        return this.placesData.data.length > 0;
+    }
+
+    setPage(i: number) {
+        this.actualPage = (i + 1);
         this.getPlacesApi();
     }
 }

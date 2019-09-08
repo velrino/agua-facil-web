@@ -1,18 +1,7 @@
 <div class="card">
     <div class="card-body">
-        <!-- <div class="row justify-content-center">
-            <div class="col-sm-4">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-            </div>
-        </div> -->
-        <button type="button" class="btn btn-primary" (click)="openPlace()">Novo</button>
+        <button type="button" class="btn btn-primary mb-2 float-right" (click)="openPlace()"><i class="fa fa-plus" aria-hidden="true"></i>
+            Criar estabelecimento</button>
 
         <table class="table">
             <thead class="thead-dark">
@@ -37,22 +26,20 @@
                         <button type="button" class="btn btn-danger" (click)="callApi(place.id, true)"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
+                <tr class="text-center" *ngIf="!havePlacesData()">
+                    <td colspan="6">
+
+                        <button type="button" class="btn btn-primary mb-2 float-center" (click)="openPlace()"><i class="fa fa-plus" aria-hidden="true"></i>
+                            Crie seu primeiro estabelecimento</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <!-- <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li> -->
+
                 <li class="page-item" *ngFor="let order of [].constructor(placesData.lastPage); let i = index" [ngClass]="{'active':isActualPage(i)}" (click)="setPage(i)">
                     <button class="page-link">{{i+1}}</button></li>
-                <!-- <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li> -->
             </ul>
         </nav>
 
