@@ -19,7 +19,8 @@ export class RequestService {
       this.http.request(url, {
         method,
         body,
-        params
+        params,
+        headers
       }).subscribe(data => {
         resolve(data.json());
       }, (error => {

@@ -12,6 +12,8 @@ import { LoginComponent } from '../../login/login.component';
 import { FilterPipe } from '../../pipes/filter/filter.pipe';
 import { AuthService } from '../../api/auth/auth.service';
 import { AuthGuardService } from '../../api/auth-guard/auth-guard.service';
+import { NgxMaskModule } from 'ngx-mask'
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const components = [
     AdminHomeComponent,
@@ -27,7 +29,10 @@ const components = [
             apiKey: 'AIzaSyBaBKMMfPD75rATU89MwJrpC9sjT_phdvI'
         }),
         NgbModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        NgxMaskModule.forRoot(),
+        NgMultiSelectDropDownModule.forRoot()
+
     ],
     declarations: [...components, FilterPipe],
     exports: components,
