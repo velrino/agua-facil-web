@@ -85,7 +85,9 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
     this.calcularTotal();
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
+      person: ['', Validators.required],
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       document: ['', [
         Validators.required,
@@ -95,12 +97,41 @@ export class LandingComponent implements OnInit {
 
   get formRegister() { return this.registerForm.controls; }
 
+  checkIncludesInvalid(input) {
+    const errors = {
+      document: 'Informe o CNPJ corretamente',
+      email: 'Informe o e-mail corretamente',
+      name: 'Informe o nome da empresa',
+      person: 'Informe o nome do responsável',
+      phone: 'Informe o número de telefone',
+    }
+    return errors[input];
+  }
 
-  submitCompany() {
-    this.toastr.error('Hello world!', 'Toastr fun!');
+  async submitCompany() {
+    const { controls } = this.registerForm;
     if (this.registerForm.invalid) {
-      const { controls } = this.registerForm;
-      console.log(controls);
+      const invalids = Object.keys(controls).filter(index => controls[index].status == "INVALID")
+      if (invalids.length) {
+        const message = this.checkIncludesInvalid(invalids[0]);
+        this.toastr.error(message);
+      }
+      return
+    } else {
+      const data = {
+        document: controls.document.value,
+        email: controls.email.value,
+        name_fantasy: controls.name.value,
+        phone: controls.phone.value,
+        person: controls.person.value,
+        name_social: controls.name.value
+      }
+      const apiResponse = await this.requestService.default('/companies', true, 'post', data);
+      if (apiResponse.error) {
+        this.toastr.error('Empresa não foi criada');
+      } else {
+        this.toastr.success('Aguarde o nosso retorno no seu e-mail');
+      }
     }
   }
 
@@ -118,5 +149,9 @@ export class LandingComponent implements OnInit {
   goToOrder(id) {
     this.modalService.dismissAll();
     this.router.navigate(['/order/'.concat(id)]);
+  }
+
+  closeModal() {
+    this.modalService.dismissAll();
   }
 }
