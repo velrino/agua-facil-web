@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { children } from './children.routes';
 import { StorageService } from '../../api/storage/storage.service';
+import { ENUMS } from '../../../helpers/enums';
 
 @Component({
     selector: 'app-home',
@@ -15,8 +16,9 @@ export class AdminHomeComponent implements OnInit {
     basePath: string = '/admin/';
     actualPath: string = null;
     ipsum: boolean = false;
-    links = children;
+    links: any;
     constructor(private modalService: NgbModal, private router: Router) {
+        this.makeLinks();
     }
 
     ngOnInit() {
@@ -48,4 +50,14 @@ export class AdminHomeComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
+    checkIsAdminMaster() {
+        const hierarchy = ENUMS.Auth('hierarchy');
+        return [99].includes(hierarchy)
+    }
+
+    makeLinks() {
+        this.links = children.filter(item => {
+            return (item.path == 'companies' && !this.checkIsAdminMaster()) ? null : item;
+        });
+    }
 }
