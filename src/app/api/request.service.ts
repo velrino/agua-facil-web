@@ -7,7 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class RequestService {
 
-  private api = 'http://localhost/api';
+  private api = 'http://198.199.77.173:4550/api';
 
   constructor(
     private http: Http,
