@@ -56,9 +56,12 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.search.address = this.activatedRoute.queryParams['address']
-        this.getPlacesApi()
-        this.calcularTotal();
+        this.activatedRoute.queryParams.subscribe(params => {
+            const address = params['address'];
+            this.search.address = (address) ? address : null;
+            this.getPlacesApi()
+            this.calcularTotal();
+          });
     }
 
     open(content: any, dismissAll = true) {
@@ -104,6 +107,7 @@ export class HomeComponent implements OnInit {
 
     async getPlacesApi(): Promise<void> {
         const url = '/places/search';
+        console.log(this.search);
         const data = await this.requestService.default(url, true, 'get', null, null, {
             ...this.search
         });
@@ -130,9 +134,4 @@ export class HomeComponent implements OnInit {
         }
         return render.join(',');
     }
-
-    getPlacesClick() {
-        this.getPlacesApi();
-    }
-
 }

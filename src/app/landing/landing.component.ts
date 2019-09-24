@@ -41,7 +41,7 @@ export class LandingComponent implements OnInit {
     }
   }
 
-  public model: any;
+  public address: any;
   stateSelected = null;
 
   search = (text$: Observable<string>) =>
@@ -52,11 +52,8 @@ export class LandingComponent implements OnInit {
         : this.states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
 
-  selectedState(state: any) {
-    this.goBusca(state.item);
-  }
-
-  goBusca(address = null) {
+  goBusca() {
+    const { address } = this;
     this.router.navigate(['/search'], { queryParams: { address } });
   }
 
