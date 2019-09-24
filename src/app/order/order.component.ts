@@ -52,9 +52,11 @@ export class OrderComponent implements OnInit {
     }
 
     defineOrder(id) {
-        this.order.id = id;
-        this.order.form = id;
-        this.getOrderApi()
+        if(id) {
+            this.order.id = id;
+            this.order.form = id;
+            this.getOrderApi()
+        }
     }
 
     async getOrderApi() {
